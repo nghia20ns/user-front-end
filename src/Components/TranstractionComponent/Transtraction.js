@@ -14,7 +14,7 @@ const Transtraction = () => {
     const getTrans = async (page, token)=>{
         try {
             const res = await axios.get(
-                `http://localhost:5000/transtraction/getall/${page}`,
+                `http://localhost:1337/transtraction/getall/${page}`,
                 {
                   headers: {
                     Authorization: `Bearer ${token.data.data.access_token}`,

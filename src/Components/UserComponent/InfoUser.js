@@ -11,7 +11,7 @@ const InfoUser = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getUsers = async () => {
     await axios
-      .get("http://localhost:5000/user/" + id)
+      .get("http://localhost:1337/user/" + id)
       .then((res) => {
         setInfoState(res.data.data);
         setApikey(res.data.data.api_key)

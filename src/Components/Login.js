@@ -19,7 +19,7 @@ const Login = () => {
 
   const getUsers = async () => {
     await axios
-      .post("http://localhost:5000/user/login", {
+      .post("http://localhost:1337/user/login", {
         email: email,
         password: password,
       })

@@ -25,7 +25,7 @@ const InfoProduct = () => {
       }, []);
       const deleteProduct = async () => {
         await axios
-          .delete("http://localhost:5000/product/delete/" + id)
+          .delete("http://localhost:1337/product/delete/" + id)
           .then((res) => {
             setInfoState(res.data.data);
             if (res.data.status === "err") {

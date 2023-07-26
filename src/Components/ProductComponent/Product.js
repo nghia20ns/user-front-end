@@ -19,7 +19,7 @@ const Product = () => {
         try {
           if (search) {
             const res = await axios.get(
-              `http://localhost:5000/product/getall/${page}?search=${search}`,
+              `http://localhost:1337/product/getall/${page}?search=${search}`,
               {
                 headers: {
                   Authorization: `Bearer ${token.data.data.access_token}`,
@@ -43,7 +43,7 @@ const Product = () => {
 
           }else{
             const res = await axios.get(
-              `http://localhost:5000/product/getall/${page}`,
+              `http://localhost:1337/product/getall/${page}`,
               {
                 headers: {
                   Authorization: `Bearer ${token.data.data.access_token}`,
