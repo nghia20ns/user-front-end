@@ -8,7 +8,7 @@ const InfoProduct = () => {
     const navigate = useNavigate();
     const getProduct = async () => {
         await axios
-          .get("http://localhost:5000/product/" + id)
+          .get("http://localhost:1337/product/" + id)
           .then((res) => {
             setInfoState(res.data.data);
             if (res.data.status === "error") {
