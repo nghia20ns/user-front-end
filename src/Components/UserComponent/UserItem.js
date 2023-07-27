@@ -12,7 +12,7 @@ const UserItem = (props) => {
     <>
       <tr onClick={() => handleClick(user._id)} key={user._id}>
         <td>{user.email}</td>
-        <td>{user.password}</td>
+        <td>{user.role}</td>
       </tr>
     </>
   );

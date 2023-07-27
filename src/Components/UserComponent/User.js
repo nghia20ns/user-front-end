@@ -95,7 +95,7 @@ const User = () => {
           <thead>
             <tr>
               <th scope="col">Email</th>
-              <th scope="col">Password</th>
+              <th scope="col">Role</th>
             </tr>
           </thead>
           <tbody>
