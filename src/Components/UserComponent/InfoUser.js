@@ -11,7 +11,7 @@ const InfoUser = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getUsers = async () => {
     await axios
-      .get("http://localhost:1337/user/" + id)
+      .get("http://45.77.215.103/api/user/" + id)
       .then((res) => {
         setInfoState(res.data.data);
         setApikey(res.data.data.api_key)
@@ -30,7 +30,7 @@ const InfoUser = () => {
   }, []);
   const deleteUser = async () => {
     await axios
-      .delete("http://localhost:5000/user/delete/" + id)
+      .delete("http://45.77.215.103/api/user/delete/" + id)
       .then((res) => {
         setInfoState(res.data.data);
         if (res.data.status === "err") {
@@ -53,7 +53,7 @@ const InfoUser = () => {
   };
   const changeApiKey = async () => {
     const res = await axios
-      .patch("http://localhost:5000/user/changeApiKey/" + id);
+      .patch("http://45.77.215.103/api/user/changeApiKey/" + id);
       setApikey(res.data.data.data.api_key);
   };
   const btnChange =()=>{

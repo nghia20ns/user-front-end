@@ -12,7 +12,7 @@ const AddUser = () => {
   const navigate = useNavigate();
   const createUser = async () => {
     await axios
-      .post("http://localhost:1337/user/signup", {
+      .post("http://45.77.215.103/api/user/signup", {
         email: email,
         password: password,
       })

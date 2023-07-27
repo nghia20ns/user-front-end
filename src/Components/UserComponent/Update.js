@@ -15,7 +15,7 @@ const Update = () => {
 
   const getUsers = async () => {
     await axios
-      .get("http://localhost:1337/user/" + id)
+      .get("http://45.77.215.103/api/user/" + id)
       .then((res) => {
         setInfoState(res.data.data);
         if (res.data.status === "error") {
@@ -28,7 +28,7 @@ const Update = () => {
   };
   const updateUser = async () => {
     await axios
-      .patch("http://localhost:1337/user/userUpdate/" + id, {
+      .patch("http://45.77.215.103/api/user/userUpdate/" + id, {
         password: password,
         email_recover: emailRecover,
       })

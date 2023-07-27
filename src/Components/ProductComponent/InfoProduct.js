@@ -8,7 +8,7 @@ const InfoProduct = () => {
     const navigate = useNavigate();
     const getProduct = async () => {
         await axios
-          .get("http://localhost:1337/product/" + id)
+          .get("http://45.77.215.103/api/product/" + id)
           .then((res) => {
             setInfoState(res.data.data);
             if (res.data.status === "error") {
@@ -25,7 +25,7 @@ const InfoProduct = () => {
       }, []);
       const deleteProduct = async () => {
         await axios
-          .delete("http://localhost:1337/product/delete/" + id)
+          .delete("http://45.77.215.103/api/product/delete/" + id)
           .then((res) => {
             setInfoState(res.data.data);
             if (res.data.status === "err") {

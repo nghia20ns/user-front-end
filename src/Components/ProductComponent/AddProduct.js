@@ -12,7 +12,7 @@ const AddProduct = () => {
     try {
       const dataObject = JSON.parse(apiInput);
       if (Array.isArray(dataObject)) {
-        await axios.post('http://localhost:1337/product/create', {
+        await axios.post('http://45.77.215.103/api/product/create', {
           apiInput: dataObject,
         })
         .then((res) => {

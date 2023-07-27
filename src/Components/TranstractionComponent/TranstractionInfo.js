@@ -11,7 +11,7 @@ const TranstractionInfo = () => {
 
     const getTrans = async () => {
         await axios
-          .get("http://localhost:1337/transtraction/" + id)
+          .get("http://45.77.215.103/api/transtraction/" + id)
           .then((res) => {
             setInfoState(res.data.data);
             setProductState(res.data.data.products)
