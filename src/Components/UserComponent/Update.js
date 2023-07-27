@@ -13,6 +13,8 @@ const Update = () => {
 
   const { id } = useParams();
 
+  const navigate = useNavigate();
+
   const getUsers = async () => {
     await axios
       .get("http://45.77.215.103/api/user/" + id)
@@ -63,7 +65,6 @@ const Update = () => {
     // console.log(e);
     updateUser();
   };
-  const navigate = useNavigate();
   return (
     <>
       {isAlert && <Alert message={isMessage} />}
