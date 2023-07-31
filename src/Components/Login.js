@@ -67,11 +67,13 @@ const Login = () => {
   const loginFuc = (e) => {
     getUsers();
     e.preventDefault();
-    setTimeout(deleteAlert, 3000);
+    setTimeout(deleteAlert, 5000);
   };
   return (
     <>
-      {state.isAlert && <Alert message={state.showMessageAlert} />}
+      <div className="row" style={{ height: 100 }}>
+        {state.isAlert && <Alert message={state.showMessageAlert} />}
+      </div>
 
       <div className="container">
         <div className=" text-center mt-5 ">

@@ -43,11 +43,13 @@ const AddUser = () => {
     e.preventDefault();
     console.log(e);
     createUser();
-    setTimeout(deleteAlert, 3000);
+    setTimeout(deleteAlert, 5000);
   };
   return (
     <>
-      {state.isAlert && <Alert message={state.showMessageAlert} />}
+      <div className="row" style={{ height: 100 }}>
+        {state.isAlert && <Alert message={state.showMessageAlert} />}
+      </div>
       <form id="contact-form" role="form" onSubmit={createFunc}>
         <div className="controls">
           <div className="row">
