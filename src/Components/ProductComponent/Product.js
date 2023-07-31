@@ -26,7 +26,6 @@ const Product = () => {
             }
           )
           .then((res) => {
-            console.log(res);
             if (res.data.status === "please login") {
               navigate("/");
             }

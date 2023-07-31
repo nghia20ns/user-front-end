@@ -14,7 +14,7 @@ const InfoUser = () => {
       .get("http://45.77.215.103/api/user/" + id)
       .then((res) => {
         setInfoState(res.data.data);
-        setApikey(res.data.data.api_key)
+        setApikey(res.data.data.api_key);
         if (res.data.status === "error") {
           navigate("/error");
         }
@@ -52,16 +52,17 @@ const InfoUser = () => {
     }
   };
   const changeApiKey = async () => {
-    const res = await axios
-      .patch("http://45.77.215.103/api/user/changeApiKey/" + id);
-      setApikey(res.data.data.data.api_key);
+    const res = await axios.patch(
+      "http://45.77.215.103/api/user/changeApiKey/" + id
+    );
+    setApikey(res.data.data.data.api_key);
   };
-  const btnChange =()=>{
+  const btnChange = () => {
     const result = window.confirm("Are you sure you want to change Api Key?");
     if (result) {
       changeApiKey();
     }
-  }
+  };
 
   return (
     <>
@@ -118,11 +119,11 @@ const InfoUser = () => {
           <ul className="list-group list-group-flush">
             <li className="list-group-item">{infoState.email}</li>
             <li className="list-group-item">{infoState.password}</li>
-            <li className="list-group-item">
-              {apikey}
-            </li>
-            <button type="submit" onClick={btnChange} className="btn btn-link" > change API key</button>
-
+            <li className="list-group-item">{apikey}</li>
+            <button type="submit" onClick={btnChange} className="btn btn-link">
+              {" "}
+              change API key
+            </button>
           </ul>
         </div>
       </div>
