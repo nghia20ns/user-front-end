@@ -1,20 +1,22 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./css/Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import Alert from "./Alert";
 import axios from "axios";
+import { Context } from "../Store/Store";
+import { actions } from "../Store/Index";
 
 const Login = () => {
   //  const [userState, setUserState] = useState([]);
+  const [state, dispatch] = useContext(Context);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [isClient, setIsClient] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const [messageError, setMessageError] = useState("");
-  const [isShowAlert, setIsShowAlert] = useState(false);
   const navigate = useNavigate();
 
   const getUsers = async () => {
@@ -31,17 +33,17 @@ const Login = () => {
           localStorage.setItem("token", JSON.stringify(res));
           setIsClient(true);
         } else if (res.data.status === "not email") {
-          setIsShowAlert(true);
-          setMessageError(res.data.message);
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
         } else if (res.data.status === "lack info") {
-          setIsShowAlert(true);
-          setMessageError(res.data.message);
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
         } else if (res.data.status === "error password") {
-          setIsShowAlert(true);
-          setMessageError(res.data.message);
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
         } else if (res.data.status === "error email") {
-          setIsShowAlert(true);
-          setMessageError(res.data.message);
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
         }
       })
       .catch(function (error) {
@@ -58,14 +60,18 @@ const Login = () => {
       navigate("/home");
     }
   }, [isClient, navigate]);
-
+  const deleteAlert = () => {
+    dispatch(actions.isAlert(false));
+    dispatch(actions.showMessageAlert(""));
+  };
   const loginFuc = (e) => {
     getUsers();
     e.preventDefault();
+    setTimeout(deleteAlert, 3000);
   };
   return (
     <>
-      {isShowAlert && <Alert message={messageError} />}
+      {state.isAlert && <Alert message={state.showMessageAlert} />}
 
       <div className="container">
         <div className=" text-center mt-5 ">

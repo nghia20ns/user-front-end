@@ -1,70 +1,68 @@
 import axios from "axios";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import UserItem from "./UserItem";
 import ReactPaginate from "react-paginate";
 import "../css/manager.css";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../../Store/Store";
+import { actions } from "../../Store/Index";
 
 const User = () => {
-  const [userState, setUserState] = useState([]);
+  // const [userState, setUserState] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
 
   const navigate = useNavigate();
 
-  const refreshToken =async (token)=>{
-    try {
-      const res = await axios.get(
-        "http://45.77.215.103/api/user/refreshToken/",
-        {
-          headers: {
-            Authorization: `Bearer ${token.data.data.refresh_token}`,
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data.status === "please login") {
-          navigate("/")
-        }
-        if (res.data.status === "token expried") {
-          navigate("/")
-        }else {
-          console.log(res.data);
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const [state, dispatch] = useContext(Context);
 
-    } catch (error) {
-      
-    }
-  }
+  // const refreshToken = async (token) => {
+  //   try {
+  //     const res = await axios
+  //       .get("http://45.77.215.103/api/user/refreshToken/", {
+  //         headers: {
+  //           Authorization: `Bearer ${token.data.data.refresh_token}`,
+  //         },
+  //       })
+  //       .then((res) => {
+  //         if (res.data.status === "please login") {
+  //           navigate("/");
+  //         }
+  //         if (res.data.status === "token expried") {
+  //           navigate("/");
+  //         } else {
+  //           console.log(res.data);
+  //         }
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //       });
+  //   } catch (error) {}
+  // };
   const getUsers = async (page, token) => {
     try {
-      const res = await axios.get(
-        `http://45.77.215.103/api/user/getUser/${page}`,
-        {
+      await axios
+        .get(`http://45.77.215.103/api/user/getUser/${page}`, {
           headers: {
             Authorization: `Bearer ${token.data.data.access_token}`,
           },
-        }
-      )
-      .then((res) => {
-        if (res.data.status === "please login") {
-          navigate("/")
-        }
-        if (res.data.status === "token expried") {
-          // refreshToken(token)
-        }else {
-          setUserState(res.data.data);
-          // setTotalPage(res.data.data.length % 5);
-          setTotalPage(res.data.page);    
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
+        })
+        .then((res) => {
+          if (res.data.status === "please login") {
+            dispatch(actions.isLogin(true));
+            navigate("/");
+          }
+          if (res.data.status === "token expired") {
+            // refreshToken(token)
+          } else {
+            dispatch(actions.showAllUser(res.data.data));
+            // setUserState(res.data.data);
+            // setTotalPage(res.data.data.length % 5);
+            setTotalPage(res.data.page);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     } catch (error) {
       console.log(error.message);
     }
@@ -74,10 +72,10 @@ const User = () => {
       const token = JSON.parse(localStorage.getItem("token"));
 
       getUsers(1, token);
+    } else {
+      navigate("/");
     }
-    else{
-      navigate("/")
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const handlePageClick = (event) => {
     getUsers(event.selected + 1, JSON.parse(localStorage.getItem("token")));
@@ -87,7 +85,6 @@ const User = () => {
   const btnAdd = () => {
     navigate("/users/add");
   };
-
   return (
     <>
       <div style={{ height: 500 }}>
@@ -99,7 +96,7 @@ const User = () => {
             </tr>
           </thead>
           <tbody>
-            {userState.map((user) => {
+            {state.showAllUser.map((user) => {
               return <UserItem key={user._id} userProps={user} />;
             })}
           </tbody>

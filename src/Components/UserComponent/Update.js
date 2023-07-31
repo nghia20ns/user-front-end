@@ -25,7 +25,7 @@ const Update = () => {
         }
       })
       .catch(function (error) {
-        console.log(error);
+        navigate("/error");
       });
   };
   const updateUser = async () => {
@@ -61,8 +61,8 @@ const Update = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const updateFuc = (e) => {
-    // e.preventDefault();
-    // console.log(e);
+    e.preventDefault();
+    console.log(e);
     updateUser();
   };
   return (
@@ -128,15 +128,15 @@ const Update = () => {
             </div>
           </div>
           <hr></hr>
-            <div className="col-md-12">
-              <input
-                type="submit"
-                className="btn btn-success btn-send  pt-2 btn-block
+          <div className="col-md-12">
+            <input
+              type="submit"
+              className="btn btn-success btn-send  pt-2 btn-block
                       "
-                defaultValue="Send Message"
-              />
-            </div>
+              defaultValue="Send Message"
+            />
           </div>
+        </div>
       </form>
 
       <Link onClick={() => navigate(-1)} className="card-link">

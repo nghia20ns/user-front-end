@@ -1,14 +1,16 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Alert from "../Alert";
+import { Context } from "../../Store/Store";
+import { actions } from "../../Store/Index";
 
 const AddUser = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [isMessage, setIsMassage] = useState("");
-  const [isAlert, setIsAlert] = useState(false);
+  const [state, dispatch] = useContext(Context);
+
   const navigate = useNavigate();
   const createUser = async () => {
     await axios
@@ -18,31 +20,34 @@ const AddUser = () => {
       })
       .then((res) => {
         if (res.data.status === "sign success") {
-          setIsAlert(true);
-          setIsMassage("created");
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
           navigate("/users");
         } else if (res.data.status === "error email") {
-          setIsAlert(true);
-          setIsMassage(res.data.message);
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
         } else if (res.data.status === "email existed") {
-          setIsAlert(true);
-          setIsMassage(res.data.message);
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
         }
-        console.log(res);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
-
+  const deleteAlert = () => {
+    dispatch(actions.isAlert(false));
+    dispatch(actions.showMessageAlert(""));
+  };
   const createFunc = (e) => {
     e.preventDefault();
     console.log(e);
     createUser();
+    setTimeout(deleteAlert, 3000);
   };
   return (
     <>
-      {isAlert && <Alert message={isMessage} />}
+      {state.isAlert && <Alert message={state.showMessageAlert} />}
       <form id="contact-form" role="form" onSubmit={createFunc}>
         <div className="controls">
           <div className="row">
