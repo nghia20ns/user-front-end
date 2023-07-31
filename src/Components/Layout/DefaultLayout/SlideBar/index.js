@@ -25,7 +25,7 @@ const index = () => {
             <Link to="/products">Product Manager</Link>
           </li>
           <li>
-            <Link to="/transtractions">Transtraction Manager</Link>
+            <Link to="/transtractions">Order Manager</Link>
           </li>
         </ul>
       </nav>
