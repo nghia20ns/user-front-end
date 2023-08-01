@@ -9,9 +9,13 @@ const InfoUser = () => {
 
   const navigate = useNavigate();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getUsers = async () => {
+  const getUsers = async (token) => {
     await axios
-      .get("http://45.77.215.103/api/user/" + id)
+      .get(`${process.env.REACT_APP_PORT}/user/` + id, {
+        headers: {
+          Authorization: `Bearer ${token.data.data.access_token}`,
+        },
+      })
       .then((res) => {
         setInfoState(res.data.data);
         setApikey(res.data.data.api_key);
@@ -25,12 +29,22 @@ const InfoUser = () => {
   };
 
   useEffect(() => {
-    getUsers();
+    if (JSON.parse(localStorage.getItem("token"))) {
+      const token = JSON.parse(localStorage.getItem("token"));
+
+      getUsers(token);
+    } else {
+      navigate("/");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const deleteUser = async () => {
+  const deleteUser = async (token) => {
     await axios
-      .delete("http://45.77.215.103/api/user/delete/" + id)
+      .delete(`${process.env.REACT_APP_PORT}/user/delete/` + id, {
+        headers: {
+          Authorization: `Bearer ${token.data.data.access_token}`,
+        },
+      })
       .then((res) => {
         setInfoState(res.data.data);
         if (res.data.status === "err") {
@@ -44,23 +58,47 @@ const InfoUser = () => {
 
   const deleteFunc = () => {
     const result = window.confirm("Are you sure you want to delete?");
-
     if (result) {
-      console.log("deleted");
-      deleteUser();
-      navigate(-1);
+      if (JSON.parse(localStorage.getItem("token"))) {
+        const token = JSON.parse(localStorage.getItem("token"));
+        deleteUser(token);
+        navigate(-1);
+      } else {
+        navigate("/");
+      }
     }
   };
-  const changeApiKey = async () => {
-    const res = await axios.patch(
-      "http://45.77.215.103/api/user/changeApiKey/" + id
-    );
-    setApikey(res.data.data.data.api_key);
+  const changeApiKey = async (token) => {
+    try {
+      await axios
+        .patch(
+          `${process.env.REACT_APP_PORT}/user/changeApiKey/` + id,
+          {
+            // Your request data goes here
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token.data.data.access_token}`,
+            },
+          }
+        )
+        .then((res) => {
+          setApikey(res.data.data.data.api_key);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const btnChange = () => {
+  const btnChange = (e) => {
+    e.preventDefault();
     const result = window.confirm("Are you sure you want to change Api Key?");
     if (result) {
-      changeApiKey();
+      if (JSON.parse(localStorage.getItem("token"))) {
+        const token = JSON.parse(localStorage.getItem("token"));
+        changeApiKey(token);
+      } else {
+        navigate("/");
+      }
     }
   };
 

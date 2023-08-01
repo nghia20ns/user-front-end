@@ -14,7 +14,7 @@ const AddUser = () => {
   const navigate = useNavigate();
   const createUser = async () => {
     await axios
-      .post("http://45.77.215.103/api/user/signup", {
+      .post(`${process.env.REACT_APP_PORT}/user/signup`, {
         email: email,
         password: password,
       })

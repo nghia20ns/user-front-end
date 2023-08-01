@@ -4,9 +4,8 @@ import { actions } from "../Store/Index";
 import { Context } from "../Store/Store";
 
 const Home = () => {
-  const [state, dispatch] = useContext(Context);
+  console.log(process.env.REACT_APP_PORT);
 
-  dispatch(actions.setTodoInput(""));
   // console.log(state.todoInput);
   return <div>Home</div>;
 };

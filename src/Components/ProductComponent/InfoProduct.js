@@ -1,51 +1,51 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const InfoProduct = () => {
-    const { id } = useParams();
-    const [infoState, setInfoState] = useState({});
-    const navigate = useNavigate();
-    const getProduct = async () => {
-        await axios
-          .get("http://45.77.215.103/api/product/" + id)
-          .then((res) => {
-            setInfoState(res.data.data);
-            if (res.data.status === "error") {
-              navigate("/error");
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      };
-      useEffect(() => {
-        getProduct();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
-      const deleteProduct = async () => {
-        await axios
-          .delete("http://45.77.215.103/api/product/delete/" + id)
-          .then((res) => {
-            setInfoState(res.data.data);
-            if (res.data.status === "err") {
-              navigate("/error");
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      };
-      const deleteFunc = () => {
-        const result = window.confirm("Are you sure you want to delete?");
-        if (result) {
-          deleteProduct();
-          navigate(-1);
+  const { id } = useParams();
+  const [infoState, setInfoState] = useState({});
+  const navigate = useNavigate();
+  const getProduct = async () => {
+    await axios
+      .get(`${process.env.REACT_APP_PORT}/product/` + id)
+      .then((res) => {
+        setInfoState(res.data.data);
+        if (res.data.status === "error") {
+          navigate("/error");
         }
-      };
-    return (
-        <>
-        <div className="row">
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  useEffect(() => {
+    getProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const deleteProduct = async () => {
+    await axios
+      .delete(`${process.env.REACT_APP_PORT}/product/delete/` + id)
+      .then((res) => {
+        setInfoState(res.data.data);
+        if (res.data.status === "err") {
+          navigate("/error");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  const deleteFunc = () => {
+    const result = window.confirm("Are you sure you want to delete?");
+    if (result) {
+      deleteProduct();
+      navigate(-1);
+    }
+  };
+  return (
+    <>
+      <div className="row">
         <div className="col sm 5">
           <div className="card" style={{ width: "18rem" }}>
             <img
@@ -110,7 +110,7 @@ const InfoProduct = () => {
         </div>
 
         <div className="col-sm-4">
-        <ul className="list-group list-group-flush">
+          <ul className="list-group list-group-flush">
             <li className="list-group-item">{infoState.email}</li>
             <li className="list-group-item">{infoState.password}</li>
             <li className="list-group-item">
@@ -141,9 +141,8 @@ const InfoProduct = () => {
           </ul>
         </div>
       </div>
-
-        </>
-    );
+    </>
+  );
 };
 
 export default InfoProduct;

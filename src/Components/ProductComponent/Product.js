@@ -18,7 +18,7 @@ const Product = () => {
       if (search) {
         await axios
           .get(
-            `http://45.77.215.103/api/product/getall/${page}?search=${search}`,
+            `${process.env.REACT_APP_PORT}/product/getall/${page}?search=${search}`,
             {
               headers: {
                 Authorization: `Bearer ${token.data.data.access_token}`,
@@ -41,7 +41,7 @@ const Product = () => {
           });
       } else {
         await axios
-          .get(`http://45.77.215.103/api/product/getall/${page}`, {
+          .get(`${process.env.REACT_APP_PORT}/product/getall/${page}`, {
             headers: {
               Authorization: `Bearer ${token.data.data.access_token}`,
             },

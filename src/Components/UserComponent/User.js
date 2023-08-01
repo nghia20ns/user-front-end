@@ -18,7 +18,7 @@ const User = () => {
   // const refreshToken = async (token) => {
   //   try {
   //     const res = await axios
-  //       .get("http://45.77.215.103/api/user/refreshToken/", {
+  //       .get(`${process.env.REACT_APP_PORT}/user/refreshToken/`, {
   //         headers: {
   //           Authorization: `Bearer ${token.data.data.refresh_token}`,
   //         },
@@ -41,7 +41,7 @@ const User = () => {
   const getUsers = async (page, token) => {
     try {
       await axios
-        .get(`http://45.77.215.103/api/user/getUser/${page}`, {
+        .get(`${process.env.REACT_APP_PORT}/user/getUser/${page}`, {
           headers: {
             Authorization: `Bearer ${token.data.data.access_token}`,
           },

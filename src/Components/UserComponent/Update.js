@@ -17,7 +17,7 @@ const Update = () => {
 
   const getUsers = async () => {
     await axios
-      .get("http://45.77.215.103/api/user/" + id)
+      .get(`${process.env.REACT_APP_PORT}/user/` + id)
       .then((res) => {
         setInfoState(res.data.data);
         if (res.data.status === "error") {
@@ -30,7 +30,7 @@ const Update = () => {
   };
   const updateUser = async () => {
     await axios
-      .patch("http://45.77.215.103/api/user/userUpdate/" + id, {
+      .patch(`${process.env.REACT_APP_PORT}/user/userUpdate/` + id, {
         password: password,
         email_recover: emailRecover,
       })

@@ -14,7 +14,7 @@ const AddProduct = () => {
       const dataObject = JSON.parse(apiInput);
       if (Array.isArray(dataObject)) {
         await axios
-          .post("http://45.77.215.103/api/product/create", {
+          .post(`${process.env.REACT_APP_PORT}/product/create`, {
             apiInput: dataObject,
           })
           .then((res) => {

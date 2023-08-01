@@ -13,7 +13,7 @@ const Transtraction = () => {
   const getTrans = async (page, token) => {
     try {
       await axios
-        .get(`http://45.77.215.103/api/transtraction/getall/${page}`, {
+        .get(`${process.env.REACT_APP_PORT}/transtraction/getall/${page}`, {
           headers: {
             Authorization: `Bearer ${token.data.data.access_token}`,
           },
