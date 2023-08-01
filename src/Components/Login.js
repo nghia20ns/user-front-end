@@ -6,7 +6,6 @@ import Alert from "./Alert";
 import axios from "axios";
 import { Context } from "../Store/Store";
 import { actions } from "../Store/Index";
-
 const Login = () => {
   //  const [userState, setUserState] = useState([]);
   const [state, dispatch] = useContext(Context);
