@@ -41,15 +41,9 @@ const AddProduct = () => {
       dispatch(actions.showMessageAlert("error"));
     }
   };
-  const deleteAlert = () => {
-    dispatch(actions.isAlert(false));
-    dispatch(actions.showMessageAlert(""));
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     createProduct();
-    setTimeout(deleteAlert, 5000);
   };
 
   return (

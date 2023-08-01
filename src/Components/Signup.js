@@ -1,13 +1,19 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Alert from "./Alert";
+import { Context } from "../Store/Store";
+import { actions } from "../Store/Index";
+
 const Signup = () => {
+  const [state, dispatch] = useContext(Context);
+
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [isMessage, setIsMassage] = useState("");
-  const [isAlert, setIsAlert] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const navigate = useNavigate();
+
   const createUser = async () => {
     await axios
       .post("http://45.77.215.103/api/user/signup", {
@@ -16,15 +22,15 @@ const Signup = () => {
       })
       .then((res) => {
         if (res.data.status === "sign success") {
-          setIsAlert(true);
-          setIsMassage("created");
-          navigate("/users");
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
+          navigate("/");
         } else if (res.data.status === "error email") {
-          setIsAlert(true);
-          setIsMassage(res.data.message);
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
         } else if (res.data.status === "email existed") {
-          setIsAlert(true);
-          setIsMassage(res.data.message);
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
         }
         console.log(res);
       })
@@ -35,70 +41,121 @@ const Signup = () => {
 
   const createFunc = (e) => {
     e.preventDefault();
-    console.log(e);
-    createUser();
+    if (confirmPassword === password) {
+      createUser();
+    } else {
+      dispatch(actions.isAlert(true));
+      dispatch(actions.showMessageAlert("Please enter the correct password"));
+    }
   };
 
   return (
     <>
-      {isAlert && <Alert message={isMessage} />}
-      {/* eslint-disable-next-line */}
-      <form id="contact-form" role="form" onSubmit={createFunc}>
-        <div className="controls">
-          <div className="row">
-            <div className="col-md-6">
-              <div className="form-group">
-                <label htmlFor="form_email">
-                  <b>Email</b>
-                </label>
-                <input
-                  id="email_recover"
-                  type="text"
-                  className="form-control"
-                  placeholder="Please enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required="required"
-                  data-error="Please fill in this field."
-                />
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="form-group">
-                <label htmlFor="form_email">
-                  <b>Password</b>
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  className="form-control"
-                  placeholder="Please enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required="required"
-                  data-error="Please fill in this field."
-                />
-              </div>
-            </div>
-          </div>
-          <hr />
-          <div className="row">
-            <div className="col-md-8">
-              <input
-                type="submit"
-                className="btn btn-success btn-send  pt-2 btn-block
-                      "
-                defaultValue="Send Message"
-              />
-            </div>
-            <div className="col-md-4">
-              <Link onClick={() => navigate(-1)} className="card-link">
-                Back
-              </Link>
-            </div>
-          </div>
+      <div className="row" style={{ height: 100 }}>
+        {state.isAlert && <Alert message={state.showMessageAlert} />}
+      </div>
+
+      <div className="container">
+        <div className=" text-center mt-5 ">
+          <h1>Signup</h1>
         </div>
-      </form>
+        <div className="row ">
+          <div className="col-lg-7 mx-auto">
+            <div className="card mt-2 mx-auto p-4 bg-light">
+              <div className="card-body bg-light">
+                <div className="container">
+                  {/* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
+                  <form id="contact-form" role="form" onSubmit={createFunc}>
+                    <div className="controls">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="form-group">
+                            <label htmlFor="form_name">Email *</label>
+                            <input
+                              id="form_name"
+                              type="text"
+                              name="name"
+                              className="form-control"
+                              placeholder="Please enter your email *"
+                              required="required"
+                              data-error="email is required."
+                              onChange={(e) => setEmail(e.target.value)}
+                              value={email}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="form-group">
+                            <label htmlFor="password">Password *</label>
+                            <input
+                              id="password"
+                              type="password"
+                              name="password"
+                              className="form-control"
+                              placeholder="Please enter your password *"
+                              required="required"
+                              data-error="password is required."
+                              onChange={(e) => setPassword(e.target.value)}
+                              value={password}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="form-group">
+                            <label htmlFor="confirm password">
+                              Confirm Password *
+                            </label>
+                            <input
+                              id="confirm password"
+                              type="password"
+                              name="password"
+                              className="form-control"
+                              placeholder="Please enter your confirm password *"
+                              required="required"
+                              data-error="confirm password is required."
+                              onChange={(e) =>
+                                setConfirmPassword(e.target.value)
+                              }
+                              value={confirmPassword}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <hr />
+                      <div className="row">
+                        <div className="col-md-12">
+                          <input
+                            type="submit"
+                            className="btn btn-success btn-send  pt-2 btn-block"
+                            defaultValue="Signup"
+                          />
+                        </div>
+                        <hr></hr>
+                        <div className="col-md-12">
+                          <Link
+                            to={"/"}
+                            className="btn btn-success btn-send  pt-2 btn-block"
+                            defaultValue="Send Message"
+                          >
+                            {" "}
+                            Login
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {/* /.8 */}
+          </div>
+          {/* /.row*/}
+        </div>
+      </div>
     </>
   );
 };

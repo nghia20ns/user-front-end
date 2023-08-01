@@ -35,15 +35,10 @@ const AddUser = () => {
         console.log(error);
       });
   };
-  const deleteAlert = () => {
-    dispatch(actions.isAlert(false));
-    dispatch(actions.showMessageAlert(""));
-  };
   const createFunc = (e) => {
     e.preventDefault();
     console.log(e);
     createUser();
-    setTimeout(deleteAlert, 5000);
   };
   return (
     <>

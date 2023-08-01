@@ -60,14 +60,9 @@ const Login = () => {
       navigate("/home");
     }
   }, [isClient, navigate]);
-  const deleteAlert = () => {
-    dispatch(actions.isAlert(false));
-    dispatch(actions.showMessageAlert(""));
-  };
   const loginFuc = (e) => {
     getUsers();
     e.preventDefault();
-    setTimeout(deleteAlert, 5000);
   };
   return (
     <>
