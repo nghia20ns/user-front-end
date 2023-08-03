@@ -105,7 +105,7 @@ const InfoUser = () => {
   return (
     <>
       <div className="row">
-        <div className="col sm 5">
+        <div className="col-sm-3">
           <div className="card" style={{ width: "18rem" }}>
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
@@ -145,9 +145,6 @@ const InfoUser = () => {
               <b>Email:</b>
             </li>
             <li className="list-group-item">
-              <b>Password:</b>
-            </li>
-            <li className="list-group-item">
               <b>Api_key:</b>
             </li>
           </ul>
@@ -156,7 +153,6 @@ const InfoUser = () => {
         <div className="col-sm-4">
           <ul className="list-group list-group-flush">
             <li className="list-group-item">{infoState.email}</li>
-            <li className="list-group-item">{infoState.password}</li>
             <li className="list-group-item">{apikey}</li>
             <button type="submit" onClick={btnChange} className="btn btn-link">
               {" "}

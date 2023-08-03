@@ -5,6 +5,7 @@ import {
   IS_LOGIN,
   IS_ALERT,
   SHOW_MESSAGE_ALERT,
+  IS_SHOW_SIDEBAR,
 } from "./Constant";
 export const setTodoInput = (payload) => ({
   type: SET_TODO_INPUT,
@@ -28,5 +29,9 @@ export const isAlert = (payload) => ({
 });
 export const showMessageAlert = (payload) => ({
   type: SHOW_MESSAGE_ALERT,
+  payload,
+});
+export const isShowSidebar = (payload) => ({
+  type: IS_SHOW_SIDEBAR,
   payload,
 });

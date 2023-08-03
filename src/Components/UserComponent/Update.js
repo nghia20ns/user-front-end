@@ -1,53 +1,69 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Alert from "../Alert";
+import { Context } from "../../Store/Store";
+import { actions } from "../../Store/Index";
 
 const Update = () => {
   const [password, setPassword] = useState("");
   const [emailRecover, setEmailRecover] = useState("");
   const [infoState, setInfoState] = useState({});
-  const [isMessage, setIsMassage] = useState("");
-  const [isAlert, setIsAlert] = useState(false);
+  const [state, dispatch] = useContext(Context);
 
   const { id } = useParams();
 
   const navigate = useNavigate();
 
-  const getUsers = async () => {
+  const getUsers = async (token) => {
     await axios
-      .get(`${process.env.REACT_APP_PORT}/user/` + id)
+      .get(`${process.env.REACT_APP_PORT}/user/` + id, {
+        headers: {
+          Authorization: `Bearer ${token.data.data.access_token}`,
+        },
+      })
       .then((res) => {
         setInfoState(res.data.data);
         if (res.data.status === "error") {
           navigate("/error");
+        }
+        if (res.data.status === "please login") {
+          navigate("/");
         }
       })
       .catch(function (error) {
         navigate("/error");
       });
   };
-  const updateUser = async () => {
+  const updateUser = async (token) => {
     await axios
-      .patch(`${process.env.REACT_APP_PORT}/user/userUpdate/` + id, {
-        password: password,
-        email_recover: emailRecover,
-      })
+      .patch(
+        `${process.env.REACT_APP_PORT}/user/userUpdate/` + id,
+        {
+          password: password,
+          email_recover: emailRecover,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token.data.data.access_token}`,
+          },
+        }
+      )
       .then((res) => {
         if (res.data.status === "update ok") {
-          setIsAlert(true);
-          setIsMassage("update successful");
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
           navigate(-1);
         } else if (res.data.status === "email already exists") {
-          setIsAlert(true);
-          setIsMassage(res.data.message);
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
         } else if (res.data.status === "error") {
-          setIsAlert(true);
-          setIsMassage(res.data.message);
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
         } else if (res.data.status === "error email") {
-          setIsAlert(true);
-          setIsMassage(res.data.message);
+          dispatch(actions.isAlert(true));
+          dispatch(actions.showMessageAlert(res.data.message));
         }
         console.log("status:", res.data.status);
         console.log("message:", res.data.message);
@@ -57,17 +73,26 @@ const Update = () => {
       });
   };
   useEffect(() => {
-    getUsers();
+    if (JSON.parse(localStorage.getItem("token"))) {
+      const token = JSON.parse(localStorage.getItem("token"));
+      getUsers(token);
+    } else {
+      navigate("/");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const updateFuc = (e) => {
     e.preventDefault();
-    console.log(e);
-    updateUser();
+    if (JSON.parse(localStorage.getItem("token"))) {
+      const token = JSON.parse(localStorage.getItem("token"));
+      updateUser(token);
+    } else {
+      navigate("/");
+    }
   };
   return (
     <>
-      {isAlert && <Alert message={isMessage} />}
+      {state.isAlert && <Alert message={state.showMessageAlert} />}
 
       <form id="contact-form" role="form" onSubmit={updateFuc}>
         <div className="controls">
@@ -118,7 +143,7 @@ const Update = () => {
                   id="password"
                   type="password"
                   className="form-control"
-                  placeholder={infoState.password}
+                  placeholder="Please enter new password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required="required"

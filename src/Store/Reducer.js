@@ -2,6 +2,7 @@ import {
   CHOOSE_DETAIL_USER,
   IS_ALERT,
   IS_LOGIN,
+  IS_SHOW_SIDEBAR,
   SET_TODO_INPUT,
   SHOW_ALL_USER,
   SHOW_MESSAGE_ALERT,
@@ -16,6 +17,7 @@ export const initialState = {
   todoInput: "dashboard",
   stateDetailUser: "",
   error: null,
+  isShowSidebar: false,
 };
 const Reducer = (state, action) => {
   switch (action.type) {
@@ -49,6 +51,11 @@ const Reducer = (state, action) => {
       return {
         ...state,
         showMessageAlert: action.payload,
+      };
+    case IS_SHOW_SIDEBAR:
+      return {
+        ...state,
+        isShowSidebar: action.payload,
       };
     //-------------more--------------//
     default:

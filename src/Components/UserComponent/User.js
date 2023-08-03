@@ -87,6 +87,21 @@ const User = () => {
   };
   return (
     <>
+      <div className="row">
+        <div className="input-group mb-3">
+          <form className="search-form">
+            <input
+              type="text"
+              id="searchInput"
+              name="search"
+              placeholder="find..."
+              // onChange={(e) => setSearchInput(e.target.value)}
+              // value={searchInput}
+            />
+          </form>
+        </div>
+      </div>
+
       <div style={{ height: 500 }}>
         <table className="table table-hover">
           <thead>

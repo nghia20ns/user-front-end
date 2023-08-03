@@ -1,36 +1,44 @@
-import React from "react";
-import "../../../css/header.css";
-import { useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Context } from "../../../../Store/Store";
+import { actions } from "../../../../Store/Index";
 
 const Index = () => {
-  const navigate =useNavigate()
-  const btnLogout=()=>{
-    localStorage.removeItem('token');
-    navigate("/")
-  }
+  // eslint-disable-next-line no-unused-vars
+  const [state, dispatch] = useContext(Context);
+
+  const navigate = useNavigate();
+  const btnLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+  const showNavbar = () => {
+    dispatch(actions.isShowSidebar(!state.isShowSidebar));
+  };
   return (
     <>
-      <header className="header">
-        <div className="header-logo">Logo</div>
-        <div className="header-menu">
-          <ul className="header-menu-list">
-            <li>
-              <div className="header-right">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
-                  alt="Avatar"
-                  className="header-avatar"
-                />
-              </div>
-            </li>
-            <li>
-              <div className="header-right">
-              <button type="button" className="btn btn-link" onClick={btnLogout}>Logout</button>
-              </div>
-            </li>
-          </ul>
+      <div className="container-fluid">
+        <div className="navbar-header">
+          <button
+            type="button"
+            id="sidebarCollapse"
+            className={state.isShowSidebar ? "active navbar-btn" : "navbar-btn"}
+            onClick={showNavbar}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
         </div>
-      </header>
+        <ul className="nav navbar-nav navbar-right">
+          <li>
+            <Link to={"/"} className="link" onClick={btnLogout}>
+              {" "}
+              Logout
+            </Link>
+          </li>
+        </ul>
+      </div>
     </>
   );
 };
