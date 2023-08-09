@@ -20,7 +20,7 @@ const Login = () => {
 
   const getUsers = async () => {
     await axios
-      .post("http://45.77.215.103/api/user/login", {
+      .post(`${process.env.REACT_APP_PORT}/users/login`, {
         email: email,
         password: password,
       })

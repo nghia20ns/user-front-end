@@ -8,7 +8,6 @@ import { actions } from "../../Store/Index";
 
 const Update = () => {
   const [password, setPassword] = useState("");
-  const [emailRecover, setEmailRecover] = useState("");
   const [infoState, setInfoState] = useState({});
   const [state, dispatch] = useContext(Context);
 
@@ -18,7 +17,7 @@ const Update = () => {
 
   const getUsers = async (token) => {
     await axios
-      .get(`${process.env.REACT_APP_PORT}/user/` + id, {
+      .get(`${process.env.REACT_APP_PORT}/users/` + id, {
         headers: {
           Authorization: `Bearer ${token.data.data.access_token}`,
         },
@@ -39,10 +38,10 @@ const Update = () => {
   const updateUser = async (token) => {
     await axios
       .patch(
-        `${process.env.REACT_APP_PORT}/user/userUpdate/` + id,
+        `${process.env.REACT_APP_PORT}/users/userUpdate/` + id,
         {
           password: password,
-          email_recover: emailRecover,
+          email_recover: infoState.email_recover,
         },
         {
           headers: {
@@ -107,6 +106,9 @@ const Update = () => {
                   type="text"
                   className="form-control"
                   placeholder={infoState.email}
+                  onChange={(e) =>
+                    setInfoState({ ...infoState, email: e.target.value })
+                  }
                   value={infoState.email}
                 />
               </div>
@@ -122,13 +124,14 @@ const Update = () => {
                   id="email_recover"
                   type="text"
                   className="form-control"
-                  placeholder={
-                    infoState.email_recover !== " "
-                      ? infoState.email_recover
-                      : "Please enter your email recover"
+                  placeholder={infoState.emailRecover}
+                  onChange={(e) =>
+                    setInfoState({
+                      ...infoState,
+                      email_recover: e.target.value,
+                    })
                   }
-                  value={emailRecover}
-                  onChange={(e) => setEmailRecover(e.target.value)}
+                  value={infoState.email_recover}
                   required="required"
                   data-error="Please fill in this field."
                 />

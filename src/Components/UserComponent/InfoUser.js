@@ -5,20 +5,20 @@ import axios from "axios";
 const InfoUser = () => {
   const { id } = useParams();
   const [infoState, setInfoState] = useState({});
-  const [apikey, setApikey] = useState("");
+  const [apiKey, setApiKey] = useState("");
 
   const navigate = useNavigate();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getUsers = async (token) => {
     await axios
-      .get(`${process.env.REACT_APP_PORT}/user/` + id, {
+      .get(`${process.env.REACT_APP_PORT}/users/` + id, {
         headers: {
           Authorization: `Bearer ${token.data.data.access_token}`,
         },
       })
       .then((res) => {
         setInfoState(res.data.data);
-        setApikey(res.data.data.api_key);
+        setApiKey(res.data.data.api_key);
         if (res.data.status === "error") {
           navigate("/error");
         }
@@ -40,7 +40,7 @@ const InfoUser = () => {
   }, []);
   const deleteUser = async (token) => {
     await axios
-      .delete(`${process.env.REACT_APP_PORT}/user/delete/` + id, {
+      .delete(`${process.env.REACT_APP_PORT}/users/delete/` + id, {
         headers: {
           Authorization: `Bearer ${token.data.data.access_token}`,
         },
@@ -72,7 +72,7 @@ const InfoUser = () => {
     try {
       await axios
         .patch(
-          `${process.env.REACT_APP_PORT}/user/changeApiKey/` + id,
+          `${process.env.REACT_APP_PORT}/users/changeApiKey/` + id,
           {
             // Your request data goes here
           },
@@ -83,7 +83,7 @@ const InfoUser = () => {
           }
         )
         .then((res) => {
-          setApikey(res.data.data.data.api_key);
+          setApiKey(res.data.data.data.api_key);
         });
     } catch (error) {
       console.log(error);
@@ -153,7 +153,7 @@ const InfoUser = () => {
         <div className="col-sm-4">
           <ul className="list-group list-group-flush">
             <li className="list-group-item">{infoState.email}</li>
-            <li className="list-group-item">{apikey}</li>
+            <li className="list-group-item">{apiKey}</li>
             <button type="submit" onClick={btnChange} className="btn btn-link">
               {" "}
               change API key

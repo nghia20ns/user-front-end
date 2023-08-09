@@ -18,7 +18,7 @@ const User = () => {
   // const refreshToken = async (token) => {
   //   try {
   //     const res = await axios
-  //       .get(`${process.env.REACT_APP_PORT}/user/refreshToken/`, {
+  //       .get(`${process.env.REACT_APP_PORT}/users/refreshToken/`, {
   //         headers: {
   //           Authorization: `Bearer ${token.data.data.refresh_token}`,
   //         },
@@ -27,7 +27,7 @@ const User = () => {
   //         if (res.data.status === "please login") {
   //           navigate("/");
   //         }
-  //         if (res.data.status === "token expried") {
+  //         if (res.data.status === "token expired") {
   //           navigate("/");
   //         } else {
   //           console.log(res.data);
@@ -41,7 +41,7 @@ const User = () => {
   const getUsers = async (page, token) => {
     try {
       await axios
-        .get(`${process.env.REACT_APP_PORT}/user/getUser/${page}`, {
+        .get(`${process.env.REACT_APP_PORT}/users/getUser/${page}`, {
           headers: {
             Authorization: `Bearer ${token.data.data.access_token}`,
           },

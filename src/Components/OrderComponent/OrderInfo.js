@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ProductList from "./ProductList";
 
-const TranstractionInfo = () => {
+const OrderInfo = () => {
   const { id } = useParams();
   const [infoState, setInfoState] = useState({});
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const TranstractionInfo = () => {
 
   const getTrans = async () => {
     await axios
-      .get(`${process.env.REACT_APP_PORT}/transtraction/` + id)
+      .get(`${process.env.REACT_APP_PORT}/orders/` + id)
       .then((res) => {
         setInfoState(res.data.data);
         setProductState(res.data.data.products);
@@ -76,4 +76,4 @@ const TranstractionInfo = () => {
   );
 };
 
-export default TranstractionInfo;
+export default OrderInfo;

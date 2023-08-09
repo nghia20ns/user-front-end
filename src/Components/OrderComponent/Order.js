@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import TranstractionItem from "./TranstractionItem";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
+import OrderItem from "./OrderItem";
 
-const Transtraction = () => {
+const Order = () => {
   const [transState, setTransState] = useState([]);
   const [totalTrans, setTotalTrans] = useState(0);
 
@@ -13,7 +13,7 @@ const Transtraction = () => {
   const getTrans = async (page, token) => {
     try {
       await axios
-        .get(`${process.env.REACT_APP_PORT}/transtraction/getall/${page}`, {
+        .get(`${process.env.REACT_APP_PORT}/orders/getall/${page}`, {
           headers: {
             Authorization: `Bearer ${token.data.data.access_token}`,
           },
@@ -59,7 +59,7 @@ const Transtraction = () => {
           </thead>
           <tbody>
             {transState.map((trans) => {
-              return <TranstractionItem key={trans._id} transProps={trans} />;
+              return <OrderItem key={trans._id} transProps={trans} />;
             })}
           </tbody>
         </table>
@@ -88,4 +88,4 @@ const Transtraction = () => {
   );
 };
 
-export default Transtraction;
+export default Order;

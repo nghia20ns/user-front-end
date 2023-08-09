@@ -18,7 +18,7 @@ const Product = () => {
       if (search) {
         await axios
           .get(
-            `${process.env.REACT_APP_PORT}/product/getall/${page}?search=${search}`,
+            `${process.env.REACT_APP_PORT}/products/getall/${page}?search=${search}`,
             {
               headers: {
                 Authorization: `Bearer ${token.data.data.access_token}`,
@@ -41,7 +41,7 @@ const Product = () => {
           });
       } else {
         await axios
-          .get(`${process.env.REACT_APP_PORT}/product/getall/${page}`, {
+          .get(`${process.env.REACT_APP_PORT}/products/getall/${page}`, {
             headers: {
               Authorization: `Bearer ${token.data.data.access_token}`,
             },
@@ -75,18 +75,6 @@ const Product = () => {
     getProduct(event.selected + 1, JSON.parse(localStorage.getItem("token")));
   };
 
-  //xu ly cong
-  const btnAdd = () => {
-    navigate("/products/add");
-  };
-  // const searchFunc = (event) => {
-  //   event.preventDefault();
-  //   if (JSON.parse(localStorage.getItem("token"))) {
-  //     const token = JSON.parse(localStorage.getItem("token"));
-
-  //     getProduct(1,token, searchInput);
-  //   }
-  // };
   return (
     <>
       <div className="row">
@@ -141,11 +129,6 @@ const Product = () => {
           activeClassName="active"
           renderOnZeroPageCount={null}
         />
-        <div className="app">
-          <button className="add-button" onClick={btnAdd}>
-            +
-          </button>
-        </div>
       </div>
     </>
   );

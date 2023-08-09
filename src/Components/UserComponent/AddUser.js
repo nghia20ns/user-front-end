@@ -14,7 +14,7 @@ const AddUser = () => {
   const navigate = useNavigate();
   const createUser = async () => {
     await axios
-      .post(`${process.env.REACT_APP_PORT}/user/signup`, {
+      .post(`${process.env.REACT_APP_PORT}/users/signup`, {
         email: email,
         password: password,
       })

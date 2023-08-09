@@ -7,10 +7,11 @@ import User from "../Components/UserComponent/User";
 import Home from "../Components/Home";
 import Product from "../Components/ProductComponent/Product";
 import InfoProduct from "../Components/ProductComponent/InfoProduct";
-import AddProduct from "../Components/ProductComponent/AddProduct";
-import Transtraction from "../Components/TranstractionComponent/Transtraction";
-import TranstractionInfo from "../Components/TranstractionComponent/TranstractionInfo";
+import UpdateProduct from "../Components/ProductComponent/UpdateProduct";
+
 import Signup from "../Components/Signup";
+import Order from "../Components/OrderComponent/Order";
+import OrderInfo from "../Components/OrderComponent/OrderInfo";
 
 const publicRoutes = [
   { path: "/", component: Login, layout: null },
@@ -24,11 +25,10 @@ const publicRoutes = [
   { path: "/users/add", component: AddUser },
   { path: "/products", component: Product },
   { path: "/products/:id", component: InfoProduct },
-  { path: "/products/add", component: AddProduct },
-  { path: "/transtractions", component: Transtraction },
-  { path: "/transtractions/:id", component: TranstractionInfo },
+  { path: "/products/update/:id", component: UpdateProduct },
 
-
+  { path: "/orders", component: Order },
+  { path: "/orders/:id", component: OrderInfo },
 ];
 const privateRoutes = {};
 export { publicRoutes, privateRoutes };

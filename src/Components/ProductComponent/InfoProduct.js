@@ -8,7 +8,7 @@ const InfoProduct = () => {
   const navigate = useNavigate();
   const getProduct = async () => {
     await axios
-      .get(`${process.env.REACT_APP_PORT}/product/` + id)
+      .get(`${process.env.REACT_APP_PORT}/products/` + id)
       .then((res) => {
         setInfoState(res.data.data);
         if (res.data.status === "error") {
@@ -25,7 +25,7 @@ const InfoProduct = () => {
   }, []);
   const deleteProduct = async () => {
     await axios
-      .delete(`${process.env.REACT_APP_PORT}/product/delete/` + id)
+      .delete(`${process.env.REACT_APP_PORT}/products/delete/` + id)
       .then((res) => {
         setInfoState(res.data.data);
         if (res.data.status === "err") {
@@ -68,9 +68,9 @@ const InfoProduct = () => {
               </li>
             </ul>
             <div className="card-body">
-              {/* <Link to={`/users/update/${id}`} className="card-link">
+              <Link to={`/products/update/${id}`} className="card-link">
                 Update
-              </Link> */}
+              </Link>
               <Link onClick={deleteFunc} className="card-link">
                 Delete
               </Link>

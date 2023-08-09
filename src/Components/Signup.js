@@ -16,7 +16,7 @@ const Signup = () => {
 
   const createUser = async () => {
     await axios
-      .post("http://45.77.215.103/api/user/signup", {
+      .post(`${process.env.REACT_APP_PORT}/users/signup`, {
         email: email,
         password: password,
       })
