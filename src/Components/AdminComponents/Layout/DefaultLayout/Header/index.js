@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Context } from "../../../../Store/Store";
-import { actions } from "../../../../Store/Index";
+import { Context } from "../../../../../Store/Store";
+import { actions } from "../../../../../Store/Index";
 
 const Index = () => {
   // eslint-disable-next-line no-unused-vars

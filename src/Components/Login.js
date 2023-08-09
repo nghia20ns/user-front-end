@@ -121,6 +121,7 @@ const Login = () => {
                             type="submit"
                             className="btn btn-success btn-send  pt-2 btn-block"
                             defaultValue="Login"
+                            value="Login"
                           />
                         </div>
                         <hr></hr>

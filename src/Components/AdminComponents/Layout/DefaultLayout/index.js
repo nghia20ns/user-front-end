@@ -2,7 +2,7 @@ import Header from "./Header";
 import SlideBar from "./SlideBar";
 import React, { useContext } from "react";
 import "../../css/style.css";
-import { Context } from "../../../Store/Store";
+import { Context } from "../../../../Store/Store";
 
 const DefaultLayout = ({ children }) => {
   // eslint-disable-next-line no-unused-vars

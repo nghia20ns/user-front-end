@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../../Store/Store";
-import { actions } from "../../Store/Index";
 
-import Alert from "../Alert";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { Context } from "../../../Store/Store";
+import { actions } from "../../../Store/Index";
+import Alert from "../../Alert";
 
 const UpdateProduct = () => {
   const [state, dispatch] = useContext(Context);

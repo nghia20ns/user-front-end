@@ -2,9 +2,9 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Alert from "../Alert";
-import { Context } from "../../Store/Store";
-import { actions } from "../../Store/Index";
+import { Context } from "../../../Store/Store";
+import { actions } from "../../../Store/Index";
+import Alert from "../../Alert";
 
 const AddUser = () => {
   const [password, setPassword] = useState("");

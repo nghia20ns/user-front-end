@@ -1,7 +1,8 @@
 import { publicRoutes } from "./routes";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { DefaultLayout } from "./Components/Layout";
 import { Fragment } from "react";
+import { DefaultLayout } from "./Components/AdminComponents/Layout";
+import DefaultLayoutClient from "./Components/ClientComponents/Layout/DefaultLayout";
 
 function App() {
   return (
@@ -9,16 +10,22 @@ function App() {
       <div className="app">
         <Routes>
           {publicRoutes.map((route, index) => {
-            const Layout = route.layout === null ? Fragment : DefaultLayout;
+            const LayoutAdmin =
+              route.layoutAdmin === null ? Fragment : DefaultLayout;
+            const LayoutClient =
+              route.layoutClient === null ? Fragment : DefaultLayoutClient;
+
             const Page = route.component;
             return (
               <Route
                 key={index}
                 path={route.path}
                 element={
-                  <Layout>
-                    <Page />
-                  </Layout>
+                  <LayoutClient>
+                    <LayoutAdmin>
+                      <Page />
+                    </LayoutAdmin>
+                  </LayoutClient>
                 }
               />
             );

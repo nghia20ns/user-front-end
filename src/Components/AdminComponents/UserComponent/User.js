@@ -4,8 +4,8 @@ import UserItem from "./UserItem";
 import ReactPaginate from "react-paginate";
 import "../css/manager.css";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../../Store/Store";
-import { actions } from "../../Store/Index";
+import { Context } from "../../../Store/Store";
+import { actions } from "../../../Store/Index";
 
 const User = () => {
   // const [userState, setUserState] = useState([]);
