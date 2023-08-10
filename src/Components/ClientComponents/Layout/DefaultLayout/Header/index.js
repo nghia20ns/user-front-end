@@ -1,15 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const index = () => {
+const Index = () => {
+  const navigate = useNavigate();
+  const btnLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   return (
     <>
       {" "}
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          <Link className="navbar-brand" href="#">
-            Navbar
-          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -24,63 +27,42 @@ const index = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" href="#">
+                <Link className="navbar-brand" to={"/home"} aria-current="page">
                   Home
                 </Link>
               </li>
+
               <li className="nav-item">
-                <Link className="nav-link" href="#">
-                  Link
-                </Link>
-              </li>
-              <li className="nav-item dropdown">
                 <Link
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+                  className="navbar-brand"
+                  to={"/about"}
+                  aria-current="page"
                 >
-                  Dropdown
-                </Link>
-                <ul className="dropdown-menu">
-                  <li>
-                    <Link className="dropdown-item" href="#">
-                      Action
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" href="#">
-                      Another action
-                    </Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" href="#">
-                      Something else here
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link disabled" aria-disabled="true">
-                  Disabled
+                  about
                 </Link>
               </li>
             </ul>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
+            <ul className="navbar-nav  mb-2 mb-lg-0">
+              <li className="nav-item">
+                <Link
+                  className="navbar-brand"
+                  to={"/information"}
+                  aria-current="page"
+                >
+                  information
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="navbar-brand"
+                  to={"/"}
+                  onClick={btnLogout}
+                  aria-current="page"
+                >
+                  Logout
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
@@ -88,4 +70,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

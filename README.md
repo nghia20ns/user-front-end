@@ -1,25 +1,22 @@
-# Getting Started with Create React App
+# Install app
+## Front-end
+### Install
+#### Download source code from github
+Use `git clone` to download source from git
+#### `git clone https://github.com/nghia20ns/user-front-end.git`
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### `npm install`
+When you run `npm install`, npm will read the `package.json` file in your project directory to find a list of packages that need to be installed. It will then download and install these packages from the npm repository and save them to the node_modules folder in your project. This helps you manage your project's dependencies and libraries efficiently.
 
-## Available Scripts
+#### `npm start`
+Runs the app in the development mode.
+Open http://localhost:3000 to view it in your browser.
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
+The page will reload when you make changes.
 You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
+#### `npm run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -29,42 +26,44 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### Structure and user interface
+The application consists of 2 parts, the client interface and the admin interface
+#### The admin interface
+including `dashboard` page, `user manager` page, `account manager` page and `order` page
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+##### Dashboard
+used to show app overview like revenue, users, products,...
+##### User manager page
+User management such as: add, edit, delete user 
+##### Account manager
+Account management such as: add, edit, delete account 
+##### Order page
+show details about the status and data of transactions
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### The client interface
+including `home` page, `about` page, `information` page and `cart` page
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Back-end
+### Install
+#### Download source code from github
+Use `git clone` to download source from git
+#### `git clone https://github.com/nghia20ns/user-front-end.git`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### `npm install`
+When you run `npm install`, npm will read the `package.json` file in your project directory to find a list of packages that need to be installed. It will then download and install these packages from the npm repository and save them to the node_modules folder in your project. This helps you manage your project's dependencies and libraries efficiently.
 
-## Learn More
+#### `npm start`
+Runs the app in the development mode.
+Open http://localhost:3005 to view it in your browser.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The page will reload when you make changes.
+You may also see any lint errors in the console.
+### The process of how the back-end handles a request is as follows
+When the front-end sends a request to the back-end, it goes through the following steps:
+1. The request is sent from the front-end to the back-end's route handler (router).
+2. Subsequently, the request passes through a middleware to authenticate the user. If the user fails authentication, they are redirected to the login page to log in again.
+3. Next, the request reaches the controller to fetch the necessary data.
+4. The controller forwards the request to a service to process the data. This service retrieves data from the database and performs required processing.
+5. Finally, once the processing is complete, the data is sent back to the front-end through a response from the back-end.
+   
+   

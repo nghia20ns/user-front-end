@@ -20,17 +20,6 @@ const DefaultLayout = ({ children }) => {
           {children}
         </div>
       </div>
-
-      {/* <header >{<Header/>}</header>
-        <div className='row'>
-            <div className='col-sm-2'>
-                <SlideBar/>
-            </div>
-                <div className='col-sm-8' style = {{marginTop: 50}}>
-                    {children}
-                </div>
-            </div>
- */}
     </>
   );
 };

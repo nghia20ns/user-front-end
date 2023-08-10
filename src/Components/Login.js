@@ -50,15 +50,21 @@ const Login = () => {
       });
   };
   useEffect(() => {
-    if (isAdmin) {
+    if (JSON.parse(localStorage.getItem("token"))) {
       navigate("/dashboard");
+    } else {
+      navigate("/");
     }
-  }, [isAdmin, navigate]);
-  useEffect(() => {
+
     if (isClient) {
       navigate("/home");
     }
-  }, [isClient, navigate]);
+
+    if (isAdmin) {
+      navigate("/dashboard");
+    }
+  }, [isAdmin, isClient, navigate]);
+
   const loginFuc = (e) => {
     getUsers();
     e.preventDefault();
