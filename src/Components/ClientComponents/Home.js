@@ -204,7 +204,7 @@ const Home = () => {
           </div>
           <div className="col-12">
             <button type="submit" className="btn btn-primary">
-              Sign in
+              Order
             </button>
           </div>
         </form>
