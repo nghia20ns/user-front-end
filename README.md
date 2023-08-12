@@ -66,4 +66,6 @@ When the front-end sends a request to the back-end, it goes through the followin
 4. The controller forwards the request to a service to process the data. This service retrieves data from the database and performs required processing.
 5. Finally, once the processing is complete, the data is sent back to the front-end through a response from the back-end.
    
-   
+### Add product
+use api: `http://localhost:3005/api/products/create`
+![Alt text](image.png)

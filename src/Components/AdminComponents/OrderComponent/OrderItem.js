@@ -16,6 +16,7 @@ const OrderItem = (props) => {
         <td>{trans.userId}</td>
         <td>{trans.provider}</td>
         <td>{trans.quantity}</td>
+        <td>{trans.status === 1 ? "success" : "failed"}</td>
       </tr>
     </>
   );

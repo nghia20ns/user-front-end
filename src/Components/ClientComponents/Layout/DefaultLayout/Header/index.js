@@ -1,12 +1,14 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+
+import "../../../css/header.css";
+import { Context } from "../../../../../Store/Store";
+import { Login, NoLogin } from "./CheckLogin";
+// import { actions } from "../../../../../Store/Index";
 
 const Index = () => {
-  const navigate = useNavigate();
-  const btnLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
+  // eslint-disable-next-line no-unused-vars
+  const [state, dispatch] = useContext(Context);
 
   return (
     <>
@@ -42,27 +44,8 @@ const Index = () => {
                 </Link>
               </li>
             </ul>
-            <ul className="navbar-nav  mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link
-                  className="navbar-brand"
-                  to={"/information"}
-                  aria-current="page"
-                >
-                  information
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="navbar-brand"
-                  to={"/"}
-                  onClick={btnLogout}
-                  aria-current="page"
-                >
-                  Logout
-                </Link>
-              </li>
-            </ul>
+
+            {state.isLogin ? <NoLogin /> : <Login />}
           </div>
         </div>
       </nav>

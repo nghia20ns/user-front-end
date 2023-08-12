@@ -12,10 +12,6 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [isClient, setIsClient] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-
   const navigate = useNavigate();
 
   const getUsers = async () => {
@@ -25,22 +21,10 @@ const Login = () => {
         password: password,
       })
       .then((res) => {
-        if (res.data.status === "login admin") {
+        if (res.data.status === "success") {
+          dispatch(actions.isLogin(false));
           localStorage.setItem("token", JSON.stringify(res));
-          setIsAdmin(true);
-        } else if (res.data.status === "login client") {
-          localStorage.setItem("token", JSON.stringify(res));
-          setIsClient(true);
-        } else if (res.data.status === "not email") {
-          dispatch(actions.isAlert(true));
-          dispatch(actions.showMessageAlert(res.data.message));
-        } else if (res.data.status === "lack info") {
-          dispatch(actions.isAlert(true));
-          dispatch(actions.showMessageAlert(res.data.message));
-        } else if (res.data.status === "error password") {
-          dispatch(actions.isAlert(true));
-          dispatch(actions.showMessageAlert(res.data.message));
-        } else if (res.data.status === "error email") {
+        } else if (res.data.status === "error") {
           dispatch(actions.isAlert(true));
           dispatch(actions.showMessageAlert(res.data.message));
         }
@@ -50,20 +34,10 @@ const Login = () => {
       });
   };
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("token"))) {
-      navigate("/dashboard");
-    } else {
-      navigate("/");
-    }
-
-    if (isClient) {
+    if (state.isLogin === false) {
       navigate("/home");
     }
-
-    if (isAdmin) {
-      navigate("/dashboard");
-    }
-  }, [isAdmin, isClient, navigate]);
+  }, [navigate, state.isLogin]);
 
   const loginFuc = (e) => {
     getUsers();
@@ -126,7 +100,6 @@ const Login = () => {
                           <input
                             type="submit"
                             className="btn btn-success btn-send  pt-2 btn-block"
-                            defaultValue="Login"
                             value="Login"
                           />
                         </div>

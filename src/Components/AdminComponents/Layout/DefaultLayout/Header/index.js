@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../../../../Store/Store";
 import { actions } from "../../../../../Store/Index";
@@ -10,11 +10,19 @@ const Index = () => {
   const navigate = useNavigate();
   const btnLogout = () => {
     localStorage.removeItem("token");
+    dispatch(actions.isLogin(true));
     navigate("/");
   };
   const showNavbar = () => {
     dispatch(actions.isShowSidebar(!state.isShowSidebar));
   };
+  useEffect(() => {
+    if (state.isLogin) {
+      navigate("/");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <div className="container-fluid">

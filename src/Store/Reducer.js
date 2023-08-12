@@ -8,10 +8,18 @@ import {
   SHOW_MESSAGE_ALERT,
 } from "./Constant";
 
+const checkLogin = () => {
+  const token = JSON.parse(localStorage.getItem("token"));
+  if (token) {
+    return false;
+  } else {
+    return true;
+  }
+};
 export const initialState = {
   isAlert: false,
   showMessageAlert: "",
-  isLogin: false,
+  isLogin: checkLogin(),
   showAllUser: [],
   todoState: "",
   todoInput: "dashboard",

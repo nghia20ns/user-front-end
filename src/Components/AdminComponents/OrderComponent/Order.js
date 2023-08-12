@@ -55,6 +55,7 @@ const Order = () => {
               <th scope="col">UserId</th>
               <th scope="col">Provider</th>
               <th scope="col">Quantity</th>
+              <th scope="col">Status</th>
             </tr>
           </thead>
           <tbody>

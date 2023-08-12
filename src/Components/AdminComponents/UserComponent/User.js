@@ -15,29 +15,6 @@ const User = () => {
 
   const [state, dispatch] = useContext(Context);
 
-  // const refreshToken = async (token) => {
-  //   try {
-  //     const res = await axios
-  //       .get(`${process.env.REACT_APP_PORT}/users/refreshToken/`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token.data.data.refresh_token}`,
-  //         },
-  //       })
-  //       .then((res) => {
-  //         if (res.data.status === "please login") {
-  //           navigate("/");
-  //         }
-  //         if (res.data.status === "token expired") {
-  //           navigate("/");
-  //         } else {
-  //           console.log(res.data);
-  //         }
-  //       })
-  //       .catch(function (error) {
-  //         console.log(error);
-  //       });
-  //   } catch (error) {}
-  // };
   const getUsers = async (page, token) => {
     try {
       await axios
@@ -48,11 +25,11 @@ const User = () => {
         })
         .then((res) => {
           if (res.data.status === "please login") {
+            localStorage.removeItem("token");
             dispatch(actions.isLogin(true));
             navigate("/");
           }
           if (res.data.status === "token expired") {
-            // refreshToken(token)
           } else {
             dispatch(actions.showAllUser(res.data.data));
             // setUserState(res.data.data);
@@ -80,7 +57,6 @@ const User = () => {
   const handlePageClick = (event) => {
     getUsers(event.selected + 1, JSON.parse(localStorage.getItem("token")));
   };
-
   //xu ly cong
   const btnAdd = () => {
     navigate("/users/add");
