@@ -1,82 +1,112 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import ProductItem from "./ProductItem";
 import ReactPaginate from "react-paginate";
 import "../css/product.css";
+import { Context } from "../../../Store/Store";
+import Alert from "../../Alert";
 
 const Product = () => {
+  // eslint-disable-next-line no-unused-vars
+  const [state, dispatch] = useContext(Context);
+
   const [productSate, setProductState] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
+  // const [page, setPage] = useState(1);
 
   const navigate = useNavigate();
 
-  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
+  const [sortEmail, setSortEmail] = useState("");
+  const [sortStatus, setSortStatus] = useState("");
+  const [sortProvider, setSortProvider] = useState("");
+  const useQuery = () => {
+    const { search } = useLocation();
 
-  const getProduct = async (page, token, search) => {
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  };
+  const query = useQuery();
+  const page = parseInt(query.get("page"));
+  const getProduct = async (
+    page,
+    token,
+    search,
+    sortEmail,
+    sortStatus,
+    sortProvider
+  ) => {
     try {
-      if (search) {
-        await axios
-          .get(
-            `${process.env.REACT_APP_PORT}/products/getall/${page}?search=${search}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token.data.data.access_token}`,
-              },
-            }
-          )
-          .then((res) => {
-            if (res.data.status === "please login") {
-              navigate("/");
-            }
-            if (res.data.status === "token expired") {
-              navigate("/");
-            } else {
-              setProductState(res.data.data);
-              setTotalPage(res.data.page);
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      } else {
-        await axios
-          .get(`${process.env.REACT_APP_PORT}/products/getall/${page}`, {
+      await axios
+        .get(
+          `${process.env.REACT_APP_PORT}/products/get/${page}/8?search=${search}&sortEmail=${sortEmail}&sortStatus=${sortStatus}&sortProvider=${sortProvider}`,
+          {
             headers: {
               Authorization: `Bearer ${token.data.data.access_token}`,
             },
-          })
-          .then((res) => {
-            if (res.data.status === "please login") {
-              navigate("/");
-            }
-            if (res.data.status === "token expired") {
-              navigate("/");
-            } else {
-              setProductState(res.data.data);
-              setTotalPage(res.data.page);
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
+          }
+        )
+        .then((res) => {
+          if (res.data.status === "please login") {
+            navigate("/");
+          }
+          if (res.data.status === "token expired") {
+            navigate("/");
+          } else {
+            setProductState(res.data.data);
+            setTotalPage(res.data.page);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     } catch (error) {}
   };
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("token"))) {
       const token = JSON.parse(localStorage.getItem("token"));
 
-      getProduct(1, token, searchInput);
+      getProduct(page, token, search, sortEmail, sortStatus, sortProvider);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchInput]);
+  }, [search, sortEmail, sortStatus, sortProvider]);
   const handlePageClick = (event) => {
-    getProduct(event.selected + 1, JSON.parse(localStorage.getItem("token")));
+    navigate(`/products/?page=${event.selected + 1}`);
+    getProduct(
+      event.selected + 1,
+      JSON.parse(localStorage.getItem("token")),
+      search,
+      sortEmail,
+      sortStatus,
+      sortProvider
+    );
+  };
+  const btnSortProvider = () => {
+    if (sortProvider === "ascending") {
+      setSortProvider("decrease");
+    } else {
+      setSortProvider("ascending");
+    }
+  };
+  const btnSortStatus = () => {
+    if (sortStatus === "ascending") {
+      setSortStatus("decrease");
+    } else {
+      setSortStatus("ascending");
+    }
+  };
+  const btnSortEmail = () => {
+    if (sortEmail === "ascending") {
+      setSortEmail("decrease");
+    } else {
+      setSortEmail("ascending");
+    }
   };
 
   return (
     <>
+      {state.isAlert && <Alert message={state.showMessageAlert} />}
+
       <div className="row">
         <div className="input-group mb-3">
           <form className="search-form">
@@ -85,21 +115,64 @@ const Product = () => {
               id="searchInput"
               name="search"
               placeholder="find..."
-              onChange={(e) => setSearchInput(e.target.value)}
-              value={searchInput}
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
             />
           </form>
         </div>
       </div>
       <div className="row">
         <div style={{ height: 500 }}>
-          <table className="table table-hover">
+          <table className="table table-hover table-bordered">
             <thead>
               <tr>
-                <th scope="col">Email</th>
+                <th scope="col">
+                  <div className="row">
+                    <div className="col-sm-9">Email</div>
+                    <div className="col-sm-3">
+                      <img
+                        onClick={btnSortEmail}
+                        className="img-sort"
+                        src="https://cdn-icons-png.flaticon.com/512/164/164018.png"
+                        alt=""
+                        width={15}
+                        height={15}
+                      ></img>
+                    </div>
+                  </div>
+                </th>
                 <th scope="col">Password</th>
-                <th scope="col">Provider</th>
-                <th scope="col">Status</th>
+                <th scope="col">
+                  <div className="row">
+                    <div className="col-sm-9">Provider</div>
+                    <div className="col-sm-3">
+                      <img
+                        onClick={btnSortProvider}
+                        className="img-sort"
+                        src="https://cdn-icons-png.flaticon.com/512/164/164018.png"
+                        alt=""
+                        width={15}
+                        height={15}
+                      ></img>
+                    </div>
+                  </div>
+                </th>
+                <th scope="col">
+                  <div className="row">
+                    <div className="col-sm-9">Status</div>
+                    <div className="col-sm-3">
+                      <img
+                        onClick={btnSortStatus}
+                        className="img-sort"
+                        src="https://cdn-icons-png.flaticon.com/512/164/164018.png"
+                        alt=""
+                        width={15}
+                        height={15}
+                      ></img>
+                    </div>
+                  </div>
+                </th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -128,6 +201,8 @@ const Product = () => {
           containerClassName="pagination"
           activeClassName="active"
           renderOnZeroPageCount={null}
+          // eslint-disable-next-line no-const-assign
+          initialPage={page - 1}
         />
       </div>
     </>

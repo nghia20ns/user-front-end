@@ -1,28 +1,117 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Context } from "../../../Store/Store";
+import { actions } from "../../../Store/Index";
+import UpdateModal from "./UpdateModal";
 
 const ProductItem = (props) => {
-    const product = props.productProps;
-    const navigate = useNavigate();
-    const handleClick = (index) => {
-        navigate(`/products/${index}`);
-    };
-    return (
-        <>
-            <tr onClick={() => handleClick(product._id)} key={product._id}>
-                <td>{product.email}</td>
-                <td>{product.password}</td>
-                <td>{product.provider}</td>
+  const [state, dispatch] = useContext(Context);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [infoState, setInfoState] = useState("");
 
-                <td>{product.status}</td>
-            </tr>
+  const product = props.productProps;
+  const navigate = useNavigate();
+  const handleClick = (index) => {
+    navigate(`/products/${index}`);
+  };
 
-        </>
-    );
+  //delete
+  const deleteProduct = async (id) => {
+    await axios
+      .delete(`${process.env.REACT_APP_PORT}/products/delete/` + id)
+      .then((res) => {
+        if (res.data.status === "err") {
+          navigate("/error");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  const btnDelete = (index) => {
+    const result = window.confirm("Are you sure you want to delete?");
+    if (result) {
+      dispatch(actions.isAlert(true));
+      dispatch(actions.showMessageAlert("delete successful"));
+      deleteProduct(index);
+      window.location.reload(false);
+    }
+  };
+  const getProduct = async (token, id) => {
+    await axios
+      .get(`${process.env.REACT_APP_PORT}/products/` + id, {
+        headers: {
+          Authorization: `Bearer ${token.data.data.access_token}`,
+        },
+      })
+      .then((res) => {
+        setInfoState(res.data.data);
+        if (res.data.status === "error") {
+          navigate("/error");
+        }
+        if (res.data.status === "please login") {
+          navigate("/");
+        }
+      })
+      .catch(function (error) {
+        navigate("/error");
+      });
+  };
+
+  //update
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setInfoState("");
+    setIsModalOpen(false);
+  };
+  const btnUpdate = (index) => {
+    if (JSON.parse(localStorage.getItem("token"))) {
+      const token = JSON.parse(localStorage.getItem("token"));
+      getProduct(token, index);
+    } else {
+      navigate("/");
+    }
+    openModal();
+  };
+
+  return (
+    <>
+      <tr key={product._id}>
+        <td onClick={() => handleClick(product._id)}>{product.email}</td>
+        <td onClick={() => handleClick(product._id)}>{product.password}</td>
+        <td onClick={() => handleClick(product._id)}>{product.provider}</td>
+        <td onClick={() => handleClick(product._id)}>{product.status}</td>
+        <td>
+          <button
+            type="button"
+            className="btn btn-success"
+            onClick={() => btnUpdate(product._id)}
+          >
+            update
+          </button>
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => btnDelete(product._id)}
+          >
+            delete
+          </button>
+        </td>
+      </tr>
+      <UpdateModal isOpen={isModalOpen} onClose={closeModal}>
+        <h4>UPDATE</h4>
+      </UpdateModal>
+    </>
+  );
 };
 
 export default ProductItem;
 ProductItem.propTypes = {
-    productProps: PropTypes.object.isRequired,
-  };
+  productProps: PropTypes.object.isRequired,
+};
