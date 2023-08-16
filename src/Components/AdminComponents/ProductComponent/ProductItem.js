@@ -6,6 +6,7 @@ import axios from "axios";
 import { Context } from "../../../Store/Store";
 import { actions } from "../../../Store/Index";
 import UpdateModal from "./UpdateModal";
+import { getDate } from "date-fns";
 
 const ProductItem = (props) => {
   const [state, dispatch] = useContext(Context);
@@ -61,23 +62,36 @@ const ProductItem = (props) => {
       });
   };
 
-  //update
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+  // //update
+  // const openModal = () => {
+  //   setIsModalOpen(true);
+  // };
 
-  const closeModal = () => {
-    setInfoState("");
-    setIsModalOpen(false);
-  };
+  // const closeModal = () => {
+  //   setInfoState("");
+  //   setIsModalOpen(false);
+  // };
   const btnUpdate = (index) => {
-    if (JSON.parse(localStorage.getItem("token"))) {
-      const token = JSON.parse(localStorage.getItem("token"));
-      getProduct(token, index);
-    } else {
-      navigate("/");
-    }
-    openModal();
+    navigate(`/products/update/${index}`);
+    // if (JSON.parse(localStorage.getItem("token"))) {
+    //   const token = JSON.parse(localStorage.getItem("token"));
+    //   getProduct(token, index);
+    // } else {
+    //   navigate("/");
+    // }
+    // openModal();
+  };
+  // const date = new Date();
+  // let now = date.toISOString();
+  const changeIso8601 = (isoDate) => {
+    const dateObject = new Date(isoDate);
+    const normalDate = dateObject.toLocaleString("en-GB", {
+      timeZone: "Asia/Ho_Chi_Minh",
+      hour12: false,
+      formatMatcher: "best fit",
+    });
+
+    return normalDate;
   };
 
   return (
@@ -87,6 +101,10 @@ const ProductItem = (props) => {
         <td onClick={() => handleClick(product._id)}>{product.password}</td>
         <td onClick={() => handleClick(product._id)}>{product.provider}</td>
         <td onClick={() => handleClick(product._id)}>{product.status}</td>
+        <td onClick={() => handleClick(product._id)}>
+          {changeIso8601(product.createdAt)}
+        </td>
+
         <td>
           <button
             type="button"
@@ -104,9 +122,6 @@ const ProductItem = (props) => {
           </button>
         </td>
       </tr>
-      <UpdateModal isOpen={isModalOpen} onClose={closeModal}>
-        <h4>UPDATE</h4>
-      </UpdateModal>
     </>
   );
 };

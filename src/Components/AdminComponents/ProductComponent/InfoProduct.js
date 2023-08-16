@@ -58,13 +58,13 @@ const InfoProduct = () => {
             </div>
             <ul className="list-group list-group-flush">
               <li className="list-group-item">
-                <b>Email:</b> {infoState.email}{" "}
+                <b>Email:</b> {infoState.email}
               </li>
               <li className="list-group-item">
-                <b>Email Recover:</b>{" "}
-                {infoState.email_recover !== " "
+                <b>Email Recover:</b>
+                {infoState.email_recover !== ""
                   ? infoState.email_recover
-                  : "none"}{" "}
+                  : "none"}
               </li>
             </ul>
             <div className="card-body">
@@ -114,7 +114,7 @@ const InfoProduct = () => {
             <li className="list-group-item">{infoState.email}</li>
             <li className="list-group-item">{infoState.password}</li>
             <li className="list-group-item">
-              {infoState.email_recover !== " "
+              {infoState.email_recover !== ""
                 ? infoState.email_recover
                 : "None"}
             </li>

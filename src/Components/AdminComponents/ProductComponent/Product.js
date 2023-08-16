@@ -18,16 +18,20 @@ const Product = () => {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
-  const [sortEmail, setSortEmail] = useState("");
-  const [sortStatus, setSortStatus] = useState("");
-  const [sortProvider, setSortProvider] = useState("");
   const useQuery = () => {
     const { search } = useLocation();
 
     return React.useMemo(() => new URLSearchParams(search), [search]);
   };
   const query = useQuery();
-  const page = parseInt(query.get("page"));
+  const page = query.get("page") ? parseInt(query.get("page")) : 1;
+
+  const sortEmail = query.get("sortEmail") ? query.get("sortEmail") : "";
+  const sortStatus = query.get("sortStatus") ? query.get("sortStatus") : "";
+  const sortProvider = query.get("sortProvider")
+    ? query.get("sortProvider")
+    : "";
+
   const getProduct = async (
     page,
     token,
@@ -71,7 +75,11 @@ const Product = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, sortEmail, sortStatus, sortProvider]);
   const handlePageClick = (event) => {
-    navigate(`/products/?page=${event.selected + 1}`);
+    navigate(
+      `/products/?page=${
+        event.selected + 1
+      }&sortEmail=${sortEmail}&sortStatus=${sortStatus}&sortProvider=${sortProvider}`
+    );
     getProduct(
       event.selected + 1,
       JSON.parse(localStorage.getItem("token")),
@@ -82,24 +90,36 @@ const Product = () => {
     );
   };
   const btnSortProvider = () => {
-    if (sortProvider === "ascending") {
-      setSortProvider("decrease");
+    if (sortProvider === "decrease") {
+      navigate(
+        `/products/?page=${page}&sortEmail=${sortEmail}&sortStatus=${sortStatus}&sortProvider=ascending`
+      );
     } else {
-      setSortProvider("ascending");
+      navigate(
+        `/products/?page=${page}&sortEmail=${sortEmail}&sortStatus=${sortStatus}&sortProvider=decrease`
+      );
     }
   };
   const btnSortStatus = () => {
-    if (sortStatus === "ascending") {
-      setSortStatus("decrease");
+    if (sortStatus === "decrease") {
+      navigate(
+        `/products/?page=${page}&sortEmail=${sortEmail}&sortStatus=ascending&sortProvider=${sortProvider}`
+      );
     } else {
-      setSortStatus("ascending");
+      navigate(
+        `/products/?page=${page}&sortEmail=${sortEmail}&sortStatus=decrease&sortProvider=${sortProvider}`
+      );
     }
   };
   const btnSortEmail = () => {
-    if (sortEmail === "ascending") {
-      setSortEmail("decrease");
+    if (sortEmail === "decrease") {
+      navigate(
+        `/products/?page=${page}&sortEmail=ascending&sortStatus=${sortStatus}&sortProvider=${sortProvider}`
+      );
     } else {
-      setSortEmail("ascending");
+      navigate(
+        `/products/?page=${page}&sortEmail=decrease&sortStatus=${sortStatus}&sortProvider=${sortProvider}`
+      );
     }
   };
 
@@ -172,6 +192,8 @@ const Product = () => {
                     </div>
                   </div>
                 </th>
+                <th scope="col">DATE</th>
+
                 <th scope="col">Action</th>
               </tr>
             </thead>
