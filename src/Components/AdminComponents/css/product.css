@@ -95,3 +95,49 @@ body {
     color: #fff;
     cursor: pointer;
 }
+
+.limitText {
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+max-width: 150px;
+}
+.hover-text {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    height: 54px; 
+    width: 100%; 
+
+  }
+  
+
+  .hover-text:before {
+    content: attr(data-text);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    display: none;
+    z-index: 1000; /* Giá trị z-index để đảm bảo hiển thị trên các phần tử khác */
+  }
+  
+  .hover-text:hover:before {
+    display: block;
+  }
+  .table-container {
+    max-height: 500px; /* Chiều cao tối đa của khung */
+    overflow-y: auto; /* Cho phép cuộn dọc khi nội dung vượt quá chiều cao */
+  }
+  
+  .pagination-wrapper {
+    bottom: 0;
+    left: 0;
+    width: 100%; /* Đảm bảo phần tử chiếm toàn bộ chiều rộng của màn hình */
+    background-color: white; /* Màu nền của phần tử */
+    padding: 10px; /* Khoảng cách padding để phân tách với nội dung khác */
+  }
+  

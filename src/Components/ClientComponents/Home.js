@@ -42,6 +42,11 @@ const Home = () => {
         }
       )
       .then((res) => {
+        if (res.data.status === "token expired") {
+          localStorage.removeItem("token");
+          dispatch(actions.isLogin(true));
+          navigate("/");
+        }
         if (res.data.status === "success") {
           dispatch(actions.isAlert(true));
           dispatch(actions.showMessageAlert(res.data.message));

@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../../../Store/Store";
 import { actions } from "../../../Store/Index";
-import UpdateModal from "./UpdateModal";
-import { getDate } from "date-fns";
+import "../css/product.css";
 
 const ProductItem = (props) => {
   const [state, dispatch] = useContext(Context);
@@ -97,14 +96,32 @@ const ProductItem = (props) => {
   return (
     <>
       <tr key={product._id}>
-        <td onClick={() => handleClick(product._id)}>{product.email}</td>
+        <td
+          onClick={() => handleClick(product._id)}
+          className="hover-text"
+          data-text={product.email}
+        >
+          <div className="limitText">{product.email}</div>
+        </td>
         <td onClick={() => handleClick(product._id)}>{product.password}</td>
         <td onClick={() => handleClick(product._id)}>{product.provider}</td>
         <td onClick={() => handleClick(product._id)}>{product.status}</td>
+        <td
+          onClick={() => handleClick(product._id)}
+          className="hover-text"
+          data-text={product.email_recover ? product.email_recover : "none!"}
+        >
+          <div className="limitText">
+            {product.email_recover ? product.email_recover : "none!"}
+          </div>
+        </td>
+
+        <td onClick={() => handleClick(product._id)}>
+          <div className="limitText">{product.information}</div>
+        </td>
         <td onClick={() => handleClick(product._id)}>
           {changeIso8601(product.createdAt)}
         </td>
-
         <td>
           <button
             type="button"

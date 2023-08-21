@@ -104,7 +104,7 @@ const InfoProduct = () => {
               <b>Message:</b>
             </li>
             <li className="list-group-item">
-              <b>Transtraction Id:</b>
+              <b>Order Id:</b>
             </li>
           </ul>
         </div>

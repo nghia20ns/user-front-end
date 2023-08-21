@@ -1,10 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import OrderItem from "./OrderItem";
+import { actions } from "../../../Store/Index";
+import { Context } from "../../../Store/Store";
 
 const Order = () => {
+  // eslint-disable-next-line no-unused-vars
+  const [state, dispatch] = useContext(Context);
+
   const [transState, setTransState] = useState([]);
   const [totalTrans, setTotalTrans] = useState(0);
 
@@ -23,7 +28,9 @@ const Order = () => {
             navigate("/");
           }
           if (res.data.status === "token expired") {
-            // navigate("/");
+            localStorage.removeItem("token");
+            dispatch(actions.isLogin(true));
+            navigate("/");
           } else {
             setTransState(res.data.data);
             setTotalTrans(res.data.page);

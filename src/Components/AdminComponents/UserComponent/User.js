@@ -30,6 +30,9 @@ const User = () => {
             navigate("/");
           }
           if (res.data.status === "token expired") {
+            localStorage.removeItem("token");
+            dispatch(actions.isLogin(true));
+            navigate("/");
           } else {
             dispatch(actions.showAllUser(res.data.data));
             // setUserState(res.data.data);
