@@ -266,7 +266,7 @@ const Product = () => {
                     <option value={"1d"}>1 day ago</option>
                     <option value={"3d"}>3 day ago</option>
                     <option value={"10d"}>10 day ago</option>
-                    <option value={"1m"}>1 month ago</option>
+                    <option value={"1month"}>1 month ago</option>
                   </select>
                 </div>
                 <div className="col-sm-3">
@@ -351,8 +351,9 @@ const Product = () => {
                     type="submit"
                     className="btn btn-danger"
                     onClick={(e) => {
-                      window.location.reload(true);
                       setDataFilter({});
+                      setCheckFilter(false);
+                      // window.location.reload(true);
                     }}
                   >
                     delete
