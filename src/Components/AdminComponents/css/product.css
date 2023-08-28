@@ -100,7 +100,7 @@ body {
 overflow: hidden;
 white-space: nowrap;
 text-overflow: ellipsis;
-max-width: 150px;
+max-width: 70px;
 }
 .hover-text {
     position: relative;

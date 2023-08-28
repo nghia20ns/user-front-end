@@ -103,7 +103,7 @@ const ProductItem = (props) => {
         </td>
 
         <td onClick={() => clickItem(product._id)}>
-          <div className="limitText">{product.information}</div>
+          <div className="">{product.information}</div>
         </td>
         <td onClick={() => clickItem(product._id)}>
           {changeIso8601(product.createdAt)}
