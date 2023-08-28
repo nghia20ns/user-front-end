@@ -8,3 +8,4 @@ export const SHOW_MESSAGE_ALERT = "show_message_alert";
 
 //---------user--------------//
 export const SHOW_ALL_USER = "show_all_user";
+export const CHECKED_ACC = "checked_acc";

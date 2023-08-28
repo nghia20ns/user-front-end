@@ -29,7 +29,7 @@ const index = () => {
           </Link>
         </li>
       </ul>
-      <ul className="list-unstyled CTAs">
+      {/* <ul className="list-unstyled CTAs">
         <li>
           <Link to="#" className="download">
             Logout
@@ -40,7 +40,7 @@ const index = () => {
             Profile
           </Link>
         </li>
-      </ul>
+      </ul> */}
     </>
   );
 };

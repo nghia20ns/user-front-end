@@ -9,12 +9,13 @@ import "../css/product.css";
 
 const ProductItem = (props) => {
   const [state, dispatch] = useContext(Context);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [infoState, setInfoState] = useState("");
 
   const product = props.productProps;
+  const handleClick = props.handleClick;
+  const handleNotClick = props.handleNotClick;
+  // const checkAll = props.checkAll;
   const navigate = useNavigate();
-  const handleClick = (index) => {
+  const clickItem = (index) => {
     navigate(`/products/${index}`);
   };
 
@@ -40,48 +41,10 @@ const ProductItem = (props) => {
       window.location.reload(false);
     }
   };
-  const getProduct = async (token, id) => {
-    await axios
-      .get(`${process.env.REACT_APP_PORT}/products/` + id, {
-        headers: {
-          Authorization: `Bearer ${token.data.data.access_token}`,
-        },
-      })
-      .then((res) => {
-        setInfoState(res.data.data);
-        if (res.data.status === "error") {
-          navigate("/error");
-        }
-        if (res.data.status === "please login") {
-          navigate("/");
-        }
-      })
-      .catch(function (error) {
-        navigate("/error");
-      });
-  };
 
-  // //update
-  // const openModal = () => {
-  //   setIsModalOpen(true);
-  // };
-
-  // const closeModal = () => {
-  //   setInfoState("");
-  //   setIsModalOpen(false);
-  // };
   const btnUpdate = (index) => {
     navigate(`/products/update/${index}`);
-    // if (JSON.parse(localStorage.getItem("token"))) {
-    //   const token = JSON.parse(localStorage.getItem("token"));
-    //   getProduct(token, index);
-    // } else {
-    //   navigate("/");
-    // }
-    // openModal();
   };
-  // const date = new Date();
-  // let now = date.toISOString();
   const changeIso8601 = (isoDate) => {
     const dateObject = new Date(isoDate);
     const normalDate = dateObject.toLocaleString("en-GB", {
@@ -89,25 +52,48 @@ const ProductItem = (props) => {
       hour12: false,
       formatMatcher: "best fit",
     });
-
     return normalDate;
+  };
+
+  //check input
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  // Add/Remove checked item from list
+  // console.log(checkAll);
+  const handleCheck = (event) => {
+    if (event.target.checked) {
+      handleClick(event.target.value);
+    } else {
+      handleNotClick(event.target.value);
+    }
   };
 
   return (
     <>
       <tr key={product._id}>
+        <td>
+          <input
+            className="form-check-input"
+            type="checkbox"
+            value={product._id}
+            onChange={handleCheck}
+            id=""
+            checked={product.checked}
+          />
+        </td>
+
         <td
-          onClick={() => handleClick(product._id)}
+          onClick={() => clickItem(product._id)}
           className="hover-text"
           data-text={product.email}
         >
           <div className="limitText">{product.email}</div>
         </td>
-        <td onClick={() => handleClick(product._id)}>{product.password}</td>
-        <td onClick={() => handleClick(product._id)}>{product.provider}</td>
-        <td onClick={() => handleClick(product._id)}>{product.status}</td>
+        <td onClick={() => clickItem(product._id)}>{product.password}</td>
+        <td onClick={() => clickItem(product._id)}>{product.provider}</td>
+        <td onClick={() => clickItem(product._id)}>{product.status}</td>
         <td
-          onClick={() => handleClick(product._id)}
+          onClick={() => clickItem(product._id)}
           className="hover-text"
           data-text={product.email_recover ? product.email_recover : "none!"}
         >
@@ -116,10 +102,10 @@ const ProductItem = (props) => {
           </div>
         </td>
 
-        <td onClick={() => handleClick(product._id)}>
+        <td onClick={() => clickItem(product._id)}>
           <div className="limitText">{product.information}</div>
         </td>
-        <td onClick={() => handleClick(product._id)}>
+        <td onClick={() => clickItem(product._id)}>
           {changeIso8601(product.createdAt)}
         </td>
         <td>
@@ -146,4 +132,7 @@ const ProductItem = (props) => {
 export default ProductItem;
 ProductItem.propTypes = {
   productProps: PropTypes.object.isRequired,
+  handleClick: PropTypes.func.isRequired,
+  checkAll: PropTypes.bool.isRequired,
+  handleNotClick: PropTypes.func.isRequired,
 };

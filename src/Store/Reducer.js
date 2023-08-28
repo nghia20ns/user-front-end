@@ -6,6 +6,7 @@ import {
   SET_TODO_INPUT,
   SHOW_ALL_USER,
   SHOW_MESSAGE_ALERT,
+  CHECKED_ACC,
 } from "./Constant";
 
 const checkLogin = () => {
@@ -26,6 +27,7 @@ export const initialState = {
   stateDetailUser: "",
   error: null,
   isShowSidebar: false,
+  checkedAcc: [],
 };
 const Reducer = (state, action) => {
   switch (action.type) {
@@ -64,6 +66,11 @@ const Reducer = (state, action) => {
       return {
         ...state,
         isShowSidebar: action.payload,
+      };
+    case CHECKED_ACC:
+      return {
+        ...state,
+        checkedAcc: action.payload,
       };
     //-------------more--------------//
     default:
